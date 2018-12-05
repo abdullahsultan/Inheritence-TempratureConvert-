@@ -1,23 +1,9 @@
-/****************************************************
-*
-*  Purpose:
-*          Demonstrate polymorphism by adding
-*          a adding a virtual function in a derived class.
-*
-********************************************************/
-
 #include <iostream>
 using namespace std;
 
-/*------------------------------------------------------
-  Class Name:	convert_base
-  Purpose: Provide a base class with a pure virtual function.
-	   Other classes can be derived from this to
-	   implement polymorphism.
----------------------------------------------------------*/
 class convert_base {
 
-protected:  		// data members for the base class
+protected:
    double initial_value;
    double converted_value;
 
@@ -53,92 +39,82 @@ class kilos_miles : public convert_base {
 public:
    kilos_miles(double passed_value) : convert_base(passed_value) { }
 
-			// the virtual function, convert_it()
-			// is defined HERE, because the base
-			// class contains a PURE function
 
    void convert_it() {
        converted_value = initial_value * 0.6;
        }
 
-};  // end of class kilos_miles
+};
 
-/*------------------------------------------------------
-  Class Name:	miles_kilos
-  Purpose: Convert from miles to kilometers.
----------------------------------------------------------*/
 class miles_kilos : public convert_base {
 
 public:
    miles_kilos(double passed_value) : convert_base(passed_value) { }
 
-	// ADD CODE HERE FOR
-  convert_it()
+  void convert_it()
   {
-    initial_value/0.6;
+     converted_value=initial_value/0.6;
   }
-	// DIVIDE INITIAL VALUE BY 0.6 TO GET KILOMETERS
 
-};  // end of class miles_kilos
-
+};
 
 
-/*------------------------------------------------------
-  Class Name:	meters_yards
-  Purpose: Convert from meters to yards.
----------------------------------------------------------*/
-// ADD CODE HERE TO CREATE A CLASS FOR METERS TO YARDS
-// MULTIPLY INITIAL VALUE BY 39.0/36.0 TO GET YARDS.
 
 
-/*------------------------------------------------------
-  Class Name:	yards_meters
-  Purpose: Convert from yards to meters.
----------------------------------------------------------*/
-// ADD CODE HERE TO CREATE A CLASS FOR YARDS TO METERS
-// MULTIPLY INITIAL VALUE BY 36.0/39.0 TO GET METERS.
+  class meters_yards:public convert_base
+  {
+    public:
+      meters_yards(double passed_value) : convert_base(passed_value) { }
+      void convert_it()
+      {converted_value=(initial_value*39)/36;}
+  };
 
 
-/*****************  Main Function Starts Here ***********/
+
+  class yards_meters:public convert_base
+ {
+ public:
+   yards_meters(double passed_value) : convert_base(passed_value) { }
+   void convert_it()
+   {converted_value=(initial_value*36)/39;}
+ };
+
+
 int main() {
 
 
-kilos_miles kilos1(100.0);  // create a kilos_to_miles object
-kilos1.convert_it(); // call the virtual function of that class
+kilos_miles kilos1(100.0);
+kilos1.convert_it();
 
 cout << endl;
 cout << endl << "Distance in kilometers is: " << kilos1.get_initial();
 cout << endl << "Distance in miles is: " << kilos1.get_converted();
 cout << endl;
 
-/* ADD CODE HERE TO:
-	1. CREATE A MILES TO KILOS OBJECT, SPECIFYING AN INTIAL VALUE OF 60.
-	2. CALL THE VIRTUAL FUNCTION FOR THAT OBJECT
-	3. PRINT OUT THE INITIAL AND CONVERTED VALUES.
-NOTE: Refer to the preceding code for kilos to miles for an example.  */
 
-/* Complete the coding for this step BEFORE YOU PROCEED FURTHER. */
+miles_kilos miles(60);
+miles.convert_it();
 
+cout << endl;
+cout << endl << "Distance in Miles is: " << miles.get_initial();
+cout << endl << "Distance in KMs is: " << miles.get_converted();
+cout << endl;
 
+  yards_meters yard(60);
+  yard.convert_it();
 
+  cout << endl;
+  cout << endl << "Distance in Yards is: " << yard.get_initial();
+  cout << endl << "Distance in Meter is: " << yard.get_converted();
+  cout << endl;
 
+meters_yards meter(55.3846);
+meter.convert_it();
 
-
-
-/* ADD CODE HERE TO:
-	1. USE THE YARDS TO METERS ROUTINE - SPECIFY AN INITIAL VALUE OF 4.
-	2. PRINT OUT THE INITIAL AND CONVERTED VALUES.           */
-
-/* Complete the coding for this step BEFORE YOU PROCEED FURTHER. */
-
-
-
-
-/*
-	3. USE THE METERS TO YARDS ROUTINE - SPECIFY AN INITIAL VALUE OF 4.
-	4. PRINT OUT THE INITIAL AND CONVERTED VALUES.
-   See previous code for examples.
-*/
+cout << endl;
+cout << endl << "Distance in Meter is: " << meter.get_initial();
+cout << endl << "Distance in Yards is: " << meter.get_converted();
+cout << endl;
 
 return(0);
-} // end main
+}
